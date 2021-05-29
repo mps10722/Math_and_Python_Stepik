@@ -3,6 +3,8 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludeFolder url="file://$MODULE_DIR$/wisdom_multiplication reviews" />
+      <excludeFolder url="file://$MODULE_DIR$/.ipynb_checkpoints" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (Math_and_Python_Stepik)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
