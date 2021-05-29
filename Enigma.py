@@ -49,10 +49,3 @@ def reflector(symbol, n):
 
     a_code = ord('A')
     return reflectors[n][ord(symbol) - a_code]
-
-
-text = 'SOME CLEAR TEXT'
-disk = 1
-
-for ch in text:
-    print(rotor(ch, disk), end='')

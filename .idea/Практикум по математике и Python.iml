@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/wisdom_multiplication reviews" />
       <excludeFolder url="file://$MODULE_DIR$/.ipynb_checkpoints" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (Math_and_Python_Stepik)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (Практикум по математике и Python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
