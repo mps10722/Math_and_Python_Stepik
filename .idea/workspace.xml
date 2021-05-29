@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bdbc2e4e-6338-40c2-bfdd-e6d06220d24c" name="Default Changelist" comment="Added kidds_encryption(text, reverse)&#10;All code moved to Caesar_cipher.py">
-      <change afterPath="$PROJECT_DIR$/Enigma.py" afterDir="false" />
+    <list default="true" id="bdbc2e4e-6338-40c2-bfdd-e6d06220d24c" name="Default Changelist" comment="Added Enigma cipher">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Enigma.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enigma.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622286956574</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added Enigma cipher">
+      <created>1622293676841</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1622293676842</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -294,7 +300,8 @@
     <MESSAGE value="Added disc_generator(alphabet)" />
     <MESSAGE value="Added jefferson_encryption(text, discs, step, reverse)" />
     <MESSAGE value="Added kidds_encryption(text, reverse)&#10;All code moved to Caesar_cipher.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added kidds_encryption(text, reverse)&#10;All code moved to Caesar_cipher.py" />
+    <MESSAGE value="Added Enigma cipher" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Enigma cipher" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

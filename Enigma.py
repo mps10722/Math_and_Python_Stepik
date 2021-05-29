@@ -11,6 +11,21 @@ rotors = {
     'Gamma': ('AFNIRLBSQWVXGUZDKMTPCOYJHE',),
 }
 
+reflectors = {
+    # reflector B: (AY) (BR) (CU) (DH) (EQ) (FS) (GL) (IP) (JX) (KN) (MO)
+    # (TZ) (VW)
+    1: 'YRUHQSLDPXNGOKMIEBFZCWVJAT',
+    # reflector C: (AF) (BV) (CP) (DJ) (EI) (GO) (HY) (KR) (LZ) (MX) (NW)
+    # (TQ) (SU)
+    2: 'FVPJIAOYEDRZXWGCTKUQSBNMHL',
+    # reflector B Dünn: (AE) (BN) (CK) (DQ) (FU) (GY) (HW) (IJ) (LO) (MP)
+    # (RX) (SZ) (TV)
+    3: 'ENKQAUYWJICOPBLMDXZVFTHRGS',
+    # reflector C Dünn: (AR) (BD) (CO) (EJ) (FN) (GT) (HK) (IV) (LM) (PW)
+    # (QZ) (SX) (UY)
+    4: 'RDOBJNTKVEHMLFCWZAXGYIPSUQ'
+}
+
 
 def rotor(symbol, n, reverse=False):
     if n == 0:
@@ -29,7 +44,12 @@ def rotor(symbol, n, reverse=False):
 
 
 def reflector(symbol, n):
-    pass
+    if n == 0:
+        return symbol
+
+    a_code = ord('A')
+    return reflectors[n][ord(symbol) - a_code]
+
 
 text = 'SOME CLEAR TEXT'
 disk = 1
