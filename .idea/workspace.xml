@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bdbc2e4e-6338-40c2-bfdd-e6d06220d24c" name="Default Changelist" comment="Added disc_generator(alphabet)">
+    <list default="true" id="bdbc2e4e-6338-40c2-bfdd-e6d06220d24c" name="Default Changelist" comment="Added jefferson_encryption(text, discs, step, reverse)">
+      <change afterPath="$PROJECT_DIR$/Caesar_cipher.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Практикум по математике и Python.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Практикум по математике и Python.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -14,8 +14,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Setup Script" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -243,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622276803895</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added jefferson_encryption(text, discs, step, reverse)">
+      <created>1622284790883</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1622284790883</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -278,7 +285,8 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Add READMY" />
     <MESSAGE value="Added disc_generator(alphabet)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added disc_generator(alphabet)" />
+    <MESSAGE value="Added jefferson_encryption(text, discs, step, reverse)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added jefferson_encryption(text, discs, step, reverse)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -290,10 +298,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/main.py" line="50">
-        <watch expression="ch" />
-      </inline-watch>
-    </watches-manager>
   </component>
 </project>
