@@ -1,3 +1,4 @@
+import random
 from collections import deque
 import re
 
@@ -32,17 +33,25 @@ def jarriquez_encryption(text: str, key: int,
                    ] for i, ch in enumerate(text))
 
 
-enc_msg = 'ТЛБЛДУЭППТКЛФЧУВНУПБКЗИХТЛТТЫХНЛОИНУВЖММИНПФНПШОКЧЛЕРНТФНАХЖИДМ' \
-          'ЯКЛТУБЖИУЕЖЕАХЛГЩЕЕЪУВНГАХИЯШПЙАОЦЦПВТЛБФТТИИНДИДНЧЮОНЯОФВТЕАТФ' \
-          'УШБЛРЮЮЧЖДРУУШГЕХУРПЧЕУВАЭУОЙБДБНОЛСКЦБСАОЦЦПВИШЮТППЦЧНЖОИНШВРЗ' \
-          'ЕЗКЗСБЮНЙРКПСЪЖФФШНЦЗРСЭШЦПЖСЙНГЭФФВЫМЖИЛРОЩСЗЮЙФШФДЖОИЗТРМООЙБ' \
-          'НФГОЩЧФЖООКОФВЙСЭФЖУЬХИСЦЖГИЪЖДШПРМЖПУПГЦНВКБНРЕКИБШМЦХЙИАМФЛУЬ' \
-          'ЙИСЗРТЕС'
-keywords = {'алмаз', 'Дакоста'}
+def disc_generator(alphabet):
+    result = list(alphabet)
+    random.shuffle(result)
 
-for i in range(1_000, 1_000_000):
-    dec_msg = jarriquez_encryption(enc_msg, i,
-                                   alphabet='АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
-                                   reverse=True)
-    if any(word.upper() in dec_msg for word in keywords):
-        print(i, dec_msg)
+    return ''.join(result)
+
+
+disc_generator('abc')
+# enc_msg = 'ТЛБЛДУЭППТКЛФЧУВНУПБКЗИХТЛТТЫХНЛОИНУВЖММИНПФНПШОКЧЛЕРНТФНАХЖИДМ' \
+#           'ЯКЛТУБЖИУЕЖЕАХЛГЩЕЕЪУВНГАХИЯШПЙАОЦЦПВТЛБФТТИИНДИДНЧЮОНЯОФВТЕАТФ' \
+#           'УШБЛРЮЮЧЖДРУУШГЕХУРПЧЕУВАЭУОЙБДБНОЛСКЦБСАОЦЦПВИШЮТППЦЧНЖОИНШВРЗ' \
+#           'ЕЗКЗСБЮНЙРКПСЪЖФФШНЦЗРСЭШЦПЖСЙНГЭФФВЫМЖИЛРОЩСЗЮЙФШФДЖОИЗТРМООЙБ' \
+#           'НФГОЩЧФЖООКОФВЙСЭФЖУЬХИСЦЖГИЪЖДШПРМЖПУПГЦНВКБНРЕКИБШМЦХЙИАМФЛУЬ' \
+#           'ЙИСЗРТЕС'
+# keywords = {'алмаз', 'Дакоста'}
+#
+# for i in range(1_000, 1_000_000):
+#     dec_msg = jarriquez_encryption(enc_msg, i,
+#                                    alphabet='АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ',
+#                                    reverse=True)
+#     if any(word.upper() in dec_msg for word in keywords):
+#         print(i, dec_msg)
