@@ -1,3 +1,7 @@
+import re
+
+ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
 rotors = {
     1: ('AELTPHQXRU', 'BKNW', 'CMOY', 'DFG', 'IV', 'JZ', 'S'),
     2: ('FIXVYOMW', 'CDKLHUP', 'ESZ', 'BJ', 'GR', 'NT', 'A', 'Q'),
@@ -49,3 +53,44 @@ def reflector(symbol, n):
 
     a_code = ord('A')
     return reflectors[n][ord(symbol) - a_code]
+
+
+def rot_n(ch, shift):
+    symbol_index = ALPHABET.find(ch)
+
+    if symbol_index > -1:
+        return ALPHABET[(symbol_index + shift) % len(ALPHABET)]
+
+
+def enigma(text, ref, rotor_1, shift_1, rotor_2, shift_2, rotor_3, shift_3):
+    pattern = re.compile(rf'[^{reflectors[1]}]+')
+    text = pattern.sub('', text.upper())
+    shifted = 0
+    result = ''
+
+    for ch in text:
+        rotor_3_output = rotor(rot_n(ch, shift_3), rotor_3) \
+            if rotor_3 > 0 else ch
+
+        rotor_2_output = rotor(
+            rot_n(rotor_3_output, shift_2 - shift_3), rotor_2) \
+            if rotor_2 > 0 else rotor_3_output
+
+        rotor_1_output = rotor(
+            rot_n(rotor_2_output, -shift_2 + shift_3),
+            rotor_1) if rotor_1 > 0 else rotor_2_output
+
+        reflected = reflector(rot_n(rotor_1_output, -shift_1), ref)
+
+        rotor_1_output = rotor(rot_n(reflected, shift_1), rotor_1, True) \
+            if rotor_1 > 0 else reflected
+        rotor_2_output = rotor(
+            rot_n(rotor_1_output, shift_2 - shift_1), rotor_2, True) \
+            if rotor_2 > 0 else rotor_1_output
+        rotor_3_output = rotor(
+            rot_n(rotor_2_output, -shift_2 + shift_3), rotor_3, True) \
+            if rotor_3 > 0 else rotor_2_output
+
+        result += rot_n(rotor_3_output, -shift_3)
+
+    return result
