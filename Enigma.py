@@ -63,34 +63,34 @@ def rot_n(ch, shift):
 
 
 def enigma(text, ref, rotor_1, shift_1, rotor_2, shift_2, rotor_3, shift_3):
-    pattern = re.compile(rf'[^{reflectors[1]}]+')
+    pattern = re.compile(rf'[^{ALPHABET}]+')
     text = pattern.sub('', text.upper())
-    shifted = 0
     result = ''
 
     for ch in text:
-        rotor_3_output = rotor(rot_n(ch, shift_3), rotor_3) \
-            if rotor_3 > 0 else ch
+        rotor_3_output = rotor(rot_n(ch, shift_3), rotor_3)
 
         rotor_2_output = rotor(
-            rot_n(rotor_3_output, shift_2 - shift_3), rotor_2) \
-            if rotor_2 > 0 else rotor_3_output
+            rot_n(rotor_3_output, shift_2 - shift_3), rotor_2)
 
         rotor_1_output = rotor(
-            rot_n(rotor_2_output, -shift_2 + shift_3),
-            rotor_1) if rotor_1 > 0 else rotor_2_output
+            rot_n(rotor_2_output, shift_1 - shift_2), rotor_1)
 
-        reflected = reflector(rot_n(rotor_1_output, -shift_1), ref)
+        reflected = reflector(
+            rot_n(rotor_1_output, -shift_1), ref)
 
-        rotor_1_output = rotor(rot_n(reflected, shift_1), rotor_1, True) \
-            if rotor_1 > 0 else reflected
+        rotor_1_output = rotor(rot_n(reflected, shift_1), rotor_1, True)
+
         rotor_2_output = rotor(
-            rot_n(rotor_1_output, shift_2 - shift_1), rotor_2, True) \
-            if rotor_2 > 0 else rotor_1_output
+            rot_n(rotor_1_output, shift_2 - shift_1), rotor_2, True)
+
         rotor_3_output = rotor(
-            rot_n(rotor_2_output, -shift_2 + shift_3), rotor_3, True) \
-            if rotor_3 > 0 else rotor_2_output
+            rot_n(rotor_2_output, shift_3 - shift_2), rotor_3, True)
 
         result += rot_n(rotor_3_output, -shift_3)
 
     return result
+
+
+print(enigma('Eto test enigmi', 1, 1, -3, 2, -5, 3, 8))
+print(enigma('BRPRBQRBLAMGA', 1, 1, -3, 2, -5, 3, 8))
