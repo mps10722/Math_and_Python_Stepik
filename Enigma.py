@@ -42,6 +42,14 @@ reflectors = {
 }
 
 
+def commutator(ch, pairs):
+    for pair in pairs:
+        if ch in pair:
+            return pair[pair.index(ch) - 1]
+    else:
+        return ch
+
+
 def rotor(symbol, n, reverse=False):
     if n == 0:
         return symbol
@@ -73,15 +81,28 @@ def rot_n(ch, shift):
         return ALPHABET[(symbol_index + shift) % len(ALPHABET)]
 
 
-def enigma(text, ref, rotor_1, shift_1, rotor_2, shift_2, rotor_3, shift_3):
+# pairs format: 'ac BG hj'
+def enigma(text, reflector_number,
+           rotor_1, shift_1, rotor_2, shift_2, rotor_3, shift_3,
+           pairs=''):
     pattern = re.compile(rf'[^{ALPHABET}]+')
     text = pattern.sub('', text.upper())
+    pairs = [pair.upper() for pair in pairs.split()]
+
+    if any(len(pair) != 2 or
+           any(pair[0] in p or pair[1] in p
+               for j, p in enumerate(pairs) if j != i)
+           for i, pair in enumerate(pairs)):
+        return 'Извините, невозможно произвести коммутацию'
+
     length_alphabet = len(ALPHABET)
     shift_at_2 = shifts_at[rotor_2]
     shift_at_3 = shifts_at[rotor_3]
     result = ''
 
     for ch in text:
+        ch = commutator(ch, pairs)
+
         shift_3 = (shift_3 + 1) % length_alphabet
         rotor_3_output = rotor(rot_n(ch, shift_3), rotor_3)
 
@@ -98,7 +119,7 @@ def enigma(text, ref, rotor_1, shift_1, rotor_2, shift_2, rotor_3, shift_3):
             rot_n(rotor_2_output, shift_1 - shift_2), rotor_1)
 
         reflected = reflector(
-            rot_n(rotor_1_output, -shift_1), ref)
+            rot_n(rotor_1_output, -shift_1), reflector_number)
 
         rotor_1_output = rotor(rot_n(reflected, shift_1), rotor_1, True)
 
@@ -108,7 +129,9 @@ def enigma(text, ref, rotor_1, shift_1, rotor_2, shift_2, rotor_3, shift_3):
         rotor_3_output = rotor(
             rot_n(rotor_2_output, shift_3 - shift_2), rotor_3, True)
 
-        result += rot_n(rotor_3_output, -shift_3)
+        ch = commutator(rot_n(rotor_3_output, -shift_3), pairs)
+
+        result += ch
 
     return result
 
@@ -124,47 +147,43 @@ if __name__ == '__main__':
         @patch('sys.stdout', new_callable=StringIO)
         def test(self, mock_stdout):
             printed = ''
-            print(enigma('AAAAAAA', 1, 1, 0, 2, 0, 3, 0))
-            printed += 'BDZGOWC'
+            print(enigma('A', 1, 1, 0, 2, 0, 3, 0, ''))
+            printed += 'B'
             self.assertEqual(mock_stdout.getvalue(), printed + '\n')
 
         @patch('sys.stdout', new_callable=StringIO)
         def test2(self, mock_stdout):
             printed = ''
-            print(enigma('BDZGOWC', 1, 1, 0, 2, 0, 3, 0))
-            printed += 'AAAAAAA'
+            print(enigma('A', 1, 1, 0, 2, 0, 3, 0, 'AC'))
+            printed += 'Q'
             self.assertEqual(mock_stdout.getvalue(), printed + '\n')
 
         @patch('sys.stdout', new_callable=StringIO)
         def test3(self, mock_stdout):
             printed = ''
-            print(enigma('AAAAAAA', 1, 2, 3, 2, 3, 2, 3))
-            printed += 'BGDMBTZ'
+            print(enigma('A', 1, 1, 0, 2, 0, 3, 0, 'AC qd'))
+            printed += 'D'
             self.assertEqual(mock_stdout.getvalue(), printed + '\n')
 
         @patch('sys.stdout', new_callable=StringIO)
         def test4(self, mock_stdout):
             printed = ''
-            print(enigma('AAAAA AAAAA AAAAA AAAAA AAAAA AAAAA AAAAA AAAAA '
-                         'AAAAA AAAAA AAAAA', 1, 2, 3, 2, 3, 2, 3))
-            printed += \
-                'BGDMBTZUONCIZMORCPNVLGOVLMURTNZNDROPETXLPLYCMIBICXITUCM'
+            print(enigma('A', 1, 1, 0, 2, 0, 3, 0, 'AC qd az'))
+            printed += 'Извините, невозможно произвести коммутацию'
             self.assertEqual(mock_stdout.getvalue(), printed + '\n')
 
         @patch('sys.stdout', new_callable=StringIO)
         def test5(self, mock_stdout):
             printed = ''
-            print(enigma('AAAAA AAAAA', 1, 1, 0, 2, 0, 2, 0))
-            printed += \
-                'SMGJHIUWUF'
+            print(enigma('A', 1, 1, 0, 2, 0, 3, 0, 'AC qd za'))
+            printed += 'Извините, невозможно произвести коммутацию'
             self.assertEqual(mock_stdout.getvalue(), printed + '\n')
 
         @patch('sys.stdout', new_callable=StringIO)
         def test6(self, mock_stdout):
             printed = ''
-            print(enigma('AAAAA AAAAA', 1, 1, 0, 2, 0, 1, 0))
-            printed += \
-                'ZEMUOFUVNB'
+            print(enigma('AAAAAAA', 1, 1, 0, 2, 0, 3, 0))
+            printed += 'BDZGOWC'
             self.assertEqual(mock_stdout.getvalue(), printed + '\n')
 
 
