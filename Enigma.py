@@ -15,6 +15,17 @@ rotors = {
     'Gamma': ('AFNIRLBSQWVXGUZDKMTPCOYJHE',),
 }
 
+shifts_at = {
+    1: (17, ),
+    2: (5, ),
+    3: (22, ),
+    4: (10, ),
+    5: (0, ),
+    6: (0, 13),
+    7: (0, 13),
+    8: (0, 13)
+}
+
 reflectors = {
     # reflector B: (AY) (BR) (CU) (DH) (EQ) (FS) (GL) (IP) (JX) (KN) (MO)
     # (TZ) (VW)
@@ -65,10 +76,20 @@ def rot_n(ch, shift):
 def enigma(text, ref, rotor_1, shift_1, rotor_2, shift_2, rotor_3, shift_3):
     pattern = re.compile(rf'[^{ALPHABET}]+')
     text = pattern.sub('', text.upper())
+    length_alphabet = len(ALPHABET)
+    shift_at_2 = shifts_at[rotor_2]
+    shift_at_3 = shifts_at[rotor_3]
     result = ''
 
     for ch in text:
+        shift_3 = (shift_3 + 1) % length_alphabet
         rotor_3_output = rotor(rot_n(ch, shift_3), rotor_3)
+
+        if shift_3 in shift_at_3 or shift_2 + 1 in shift_at_2:
+            shift_2 = (shift_2 + 1) % length_alphabet
+
+            if shift_2 in shift_at_2:
+                shift_1 = (shift_1 + 1) % length_alphabet
 
         rotor_2_output = rotor(
             rot_n(rotor_3_output, shift_2 - shift_3), rotor_2)
@@ -92,5 +113,59 @@ def enigma(text, ref, rotor_1, shift_1, rotor_2, shift_2, rotor_3, shift_3):
     return result
 
 
-print(enigma('Eto test enigmi', 1, 1, -3, 2, -5, 3, 8))
-print(enigma('BRPRBQRBLAMGA', 1, 1, -3, 2, -5, 3, 8))
+if __name__ == '__main__':
+    import unittest
+    from unittest.mock import patch
+    from io import StringIO
+
+
+    class Test(unittest.TestCase):
+
+        @patch('sys.stdout', new_callable=StringIO)
+        def test(self, mock_stdout):
+            printed = ''
+            print(enigma('AAAAAAA', 1, 1, 0, 2, 0, 3, 0))
+            printed += 'BDZGOWC'
+            self.assertEqual(mock_stdout.getvalue(), printed + '\n')
+
+        @patch('sys.stdout', new_callable=StringIO)
+        def test2(self, mock_stdout):
+            printed = ''
+            print(enigma('BDZGOWC', 1, 1, 0, 2, 0, 3, 0))
+            printed += 'AAAAAAA'
+            self.assertEqual(mock_stdout.getvalue(), printed + '\n')
+
+        @patch('sys.stdout', new_callable=StringIO)
+        def test3(self, mock_stdout):
+            printed = ''
+            print(enigma('AAAAAAA', 1, 2, 3, 2, 3, 2, 3))
+            printed += 'BGDMBTZ'
+            self.assertEqual(mock_stdout.getvalue(), printed + '\n')
+
+        @patch('sys.stdout', new_callable=StringIO)
+        def test4(self, mock_stdout):
+            printed = ''
+            print(enigma('AAAAA AAAAA AAAAA AAAAA AAAAA AAAAA AAAAA AAAAA '
+                         'AAAAA AAAAA AAAAA', 1, 2, 3, 2, 3, 2, 3))
+            printed += \
+                'BGDMBTZUONCIZMORCPNVLGOVLMURTNZNDROPETXLPLYCMIBICXITUCM'
+            self.assertEqual(mock_stdout.getvalue(), printed + '\n')
+
+        @patch('sys.stdout', new_callable=StringIO)
+        def test5(self, mock_stdout):
+            printed = ''
+            print(enigma('AAAAA AAAAA', 1, 1, 0, 2, 0, 2, 0))
+            printed += \
+                'SMGJHIUWUF'
+            self.assertEqual(mock_stdout.getvalue(), printed + '\n')
+
+        @patch('sys.stdout', new_callable=StringIO)
+        def test6(self, mock_stdout):
+            printed = ''
+            print(enigma('AAAAA AAAAA', 1, 1, 0, 2, 0, 1, 0))
+            printed += \
+                'ZEMUOFUVNB'
+            self.assertEqual(mock_stdout.getvalue(), printed + '\n')
+
+
+    unittest.main()
