@@ -23,7 +23,7 @@ def print_mimic(m_dict, word=''):
     result = []
     current_word = word
 
-    for i in range(199):
+    for i in range(200):
         result.append(current_word)
 
         if current_word not in m_dict:
