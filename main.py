@@ -20,6 +20,7 @@ def mimic_dict(string):
 
 
 def print_mimic(m_dict, word=''):
+    seed(41)
     result = []
     current_word = word
 
