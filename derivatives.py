@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import numpy_ex as np
+import numpy as np
 
 
 def f(value):
